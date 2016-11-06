@@ -324,6 +324,7 @@ enum quantum_keycodes {
 #define MT(mod, kc) (kc | QK_MOD_TAP | ((mod & 0xF) << 8))
 #define CTL_T(kc) MT(MOD_LCTL, kc)
 #define SFT_T(kc) MT(MOD_LSFT, kc)
+#define RSFT_T(kc) MT(0x14, kc)
 #define ALT_T(kc) MT(MOD_LALT, kc)
 #define GUI_T(kc) MT(MOD_LGUI, kc)
 #define C_S_T(kc) MT((MOD_LCTL | MOD_LSFT), kc) // Control + Shift e.g. for gnome-terminal
