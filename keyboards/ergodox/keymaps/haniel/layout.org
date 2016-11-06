@@ -1,0 +1,10 @@
+# General:
+
+# - keys that have different behaviour when combined with Shift are
+# depicted with the default one
+#
+# - CapsLock should be turned into Super by the OS
+# - <c> does not work inside Emacs, only for HTML exporting
+
+# Ln -> toggle layer n
+# K1/K2 -> Tapping yields key 1, holding yields key 2
