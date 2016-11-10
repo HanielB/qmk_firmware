@@ -10,18 +10,18 @@
 #define _DV_CTRL 1
 #define _LW 2
 #define _RS 3
-#define _MD 4
-#define _MV 5
-#define _MV_L 6
-#define _LW_CTRL 7
-#define _RS_CTRL 8
+#define _MV 4
+#define _MV_L 5
+#define _LW_CTRL 6
+#define _RS_CTRL 7
+#define _MD 8
 #define _MD_R 9
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* 0: Dvorak */
   [_DV] = KEYMAP(
-                 KC_GRV,      KC_1,    KC_2,    KC_3,          KC_4,    KC_5, TG(6),
-                 KC_BSPC,     KC_QUOT, KC_COMM, KC_DOT,        KC_P,    KC_Y, TG(1),
+                 KC_GRV,      KC_1,    KC_2,    KC_3,          KC_4,    KC_5, TG(_MV_L),
+                 KC_BSPC,     KC_QUOT, KC_COMM, KC_DOT,        KC_P,    KC_Y, TG(_DV_CTRL),
                  KC_CAPSLOCK, KC_A,    KC_O,    LT(_MV, KC_E), KC_U,    KC_I,
                  KC_LSFT,     KC_SCLN, KC_Q,    KC_J,          KC_K,    KC_X, KC_ENTER,
                  MO(_RS),     KC_RALT, KC_LALT, F(1),          MO(_RS),
@@ -30,8 +30,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  KC_HOME,
                  GUI_T(KC_SPC), CTL_T(KC_TAB), KC_END,
 
-                 TG(5),    KC_6, KC_7, KC_8,          KC_9,  KC_0,  KC_BSLS,
-                 TG(1),    KC_F, KC_G, KC_C,          KC_R,  KC_L,  KC_BSPC,
+                 TG(_MV),    KC_6, KC_7, KC_8,          KC_9,  KC_0,  KC_BSLS,
+                 TG(_DV_CTRL),    KC_F, KC_G, KC_C,          KC_R,  KC_L,  KC_BSPC,
                  KC_D, KC_H, LT(_MD, KC_T), KC_N,  KC_S,  KC_CAPSLOCK,
                  KC_ENTER, KC_B, KC_M, KC_W,          KC_V,  KC_Z,  KC_RSFT,
                  MO(_LW), F(1),          KC_NO, KC_NO, MO(_LW),
@@ -105,7 +105,95 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  KC_TRNS,
                  KC_TRNS, KC_TRNS, KC_TRNS
                  ),
-  /* 4: Media and mouse */
+  /* 4: Moving */
+  [_MV] = KEYMAP(
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_SPC,  KC_TRNS, KC_DELT, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TAB, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+
+                 KC_TRNS, KC_TRNS,
+                 KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS,
+                 // right hand
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 TG(_MD_R), KC_TRNS, KC_PGDN, KC_UP,   KC_PGUP, KC_TRNS, KC_TRNS,
+                          KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_HOME, KC_TRNS, KC_END,  KC_TRNS, KC_TRNS,
+                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+
+                 KC_TRNS, KC_TRNS,
+                 KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS
+         ),
+  /* 5: Moving with left */
+  [_MV_L] = KEYMAP(
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_PGDN, KC_UP,   KC_PGUP, KC_TRNS, TG(_MD),
+                 KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_HOME, KC_TRNS, KC_END,  KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+
+                 KC_TRNS, KC_TRNS,
+                 KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS,
+                 // right hand
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+
+                 KC_TRNS, KC_TRNS,
+                 KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS
+         ),
+  /* 6: Lower with "control" */
+  [_LW_CTRL] = KEYMAP(
+                 KC_TRNS, F(144), F(145), F(146), F(147), F(148), KC_TRNS,
+                 KC_TRNS, F(149), F(150), F(151), F(152), F(153), KC_TRNS,
+                 KC_TRNS, F(154), F(155), F(156), F(157), F(158),
+                 KC_TRNS, F(159), F(160), F(161), F(162), F(163), KC_TRNS,
+                 KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,
+
+                          KC_TRNS, KC_TRNS,
+                                   KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS,
+
+                 KC_TRNS, F(164), F(165), F(166), F(167), F(168),  KC_TRNS,
+                 KC_TRNS, F(169), F(170), F(171), F(172), F(173),  KC_TRNS,
+                          F(174), F(175), F(176), F(177), F(178),  KC_TRNS,
+                 KC_TRNS, F(179), F(180), F(181), F(182), F(183), KC_TRNS,
+                 KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS, KC_TRNS,
+
+                 KC_TRNS, KC_TRNS,
+                 KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS
+                 ),
+  /* 7: Raise with "control" */
+  [_RS_CTRL] = KEYMAP(
+                 KC_TRNS, F(104), F(105), F(106), F(107), F(108), KC_TRNS,
+                 KC_TRNS, F(109), F(110), F(111), F(112), F(113), KC_TRNS,
+                 KC_TRNS, F(114), F(115), F(116), F(117), F(118),
+                 KC_TRNS, F(119), F(120), F(121), F(122), F(123), KC_TRNS,
+                 KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,
+
+                          KC_TRNS, KC_TRNS,
+                                   KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS,
+
+                 KC_TRNS, F(124), F(125), F(126), F(127), F(128),  KC_TRNS,
+                 KC_TRNS, F(129), F(130), F(131), F(132), F(133),  KC_TRNS,
+                          F(134), F(135), F(136), F(137), F(138),  KC_TRNS,
+                 KC_TRNS, F(139), F(140), F(141), F(142), F(143), KC_TRNS,
+                 KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS, KC_TRNS,
+
+                 KC_TRNS, KC_TRNS,
+                 KC_TRNS,
+                 KC_TRNS, KC_TRNS, KC_TRNS
+                 ),
+  /* 8: Media and mouse */
   [_MD] = KEYMAP(
                  KC_TRNS, KC_TRNS,       KC_TRNS, KC_TRNS,       KC_TRNS,         KC_TRNS, KC_TRNS,
                  KC_TRNS, KC_TRNS,       KC_BTN3, KC_MS_U,       KC_MS_WH_RIGHT,  KC_TRNS, KC_TRNS,
@@ -149,94 +237,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  KC_TRNS,
                  KC_TRNS, GUI_T(KC_BTN2), KC_BTN1
          ),
-  /* 5: Moving */
-  [_MV] = KEYMAP(
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_SPC,  KC_TRNS, KC_DELT, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TAB, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
-                 // right hand
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 TG(_MD_R), KC_TRNS, KC_PGDN, KC_UP,   KC_PGUP, KC_TRNS, KC_TRNS,
-                          KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_HOME, KC_TRNS, KC_END,  KC_TRNS, KC_TRNS,
-                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
-         ),
-  /* 6: Moving with left */
-  [_MV_L] = KEYMAP(
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_PGDN, KC_UP,   KC_PGUP, KC_TRNS, TG(_MD),
-                 KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_HOME, KC_TRNS, KC_END,  KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
-                 // right hand
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
-         ),
-  /* 8: Raise with "control" */
-  [_RS_CTRL] = KEYMAP(
-                 KC_TRNS, F(104), F(105), F(106), F(107), F(108), KC_TRNS,
-                 KC_TRNS, F(109), F(110), F(111), F(112), F(113), KC_TRNS,
-                 KC_TRNS, F(114), F(115), F(116), F(117), F(118),
-                 KC_TRNS, F(119), F(120), F(121), F(122), F(123), KC_TRNS,
-                 KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,
-
-                          KC_TRNS, KC_TRNS,
-                                   KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, F(124), F(125), F(126), F(127), F(128),  KC_TRNS,
-                 KC_TRNS, F(129), F(130), F(131), F(132), F(133),  KC_TRNS,
-                          F(134), F(135), F(136), F(137), F(138),  KC_TRNS,
-                 KC_TRNS, F(139), F(140), F(141), F(142), F(143), KC_TRNS,
-                 KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
-                 ),
-  /* 7: Lower with "control" */
-  [_LW_CTRL] = KEYMAP(
-                 KC_TRNS, F(144), F(145), F(146), F(147), F(148), KC_TRNS,
-                 KC_TRNS, F(149), F(150), F(151), F(152), F(153), KC_TRNS,
-                 KC_TRNS, F(154), F(155), F(156), F(157), F(158),
-                 KC_TRNS, F(159), F(160), F(161), F(162), F(163), KC_TRNS,
-                 KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,
-
-                          KC_TRNS, KC_TRNS,
-                                   KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, F(164), F(165), F(166), F(167), F(168),  KC_TRNS,
-                 KC_TRNS, F(169), F(170), F(171), F(172), F(173),  KC_TRNS,
-                          F(174), F(175), F(176), F(177), F(178),  KC_TRNS,
-                 KC_TRNS, F(179), F(180), F(181), F(182), F(183), KC_TRNS,
-                 KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
-                 ),
 };
 
 const uint16_t PROGMEM fn_actions[] = {
