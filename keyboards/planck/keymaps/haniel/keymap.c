@@ -4,16 +4,19 @@
 #include "planck.h"
 #include "backlight.h"
 
+/* time of "tapping" is set by "TAPPING_TERM" in config.h */
+
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
-#define _DV_EM 0
-#define _DV 1
+#define _DV 0
+#define _DV_CTRL 1
 #define _LW 2
 #define _RS 3
 #define _MD 4
 #define _MV 5
+#define _GM 6
 
 /* KC_NO: for a key having no effect */
 
@@ -22,14 +25,14 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-[_DV_EM] = { /* Dvorak for Emacs */
+[_DV] = { /* Dvorak for Emacs */
   {KC_BSPC,KC_QUOT, KC_COMM, KC_DOT,KC_P, KC_Y, KC_F, KC_G, KC_C,  KC_R,    KC_L,    KC_BSPC},
   {KC_CAPSLOCK, KC_A, KC_O, LT(_MV, KC_E), KC_U, KC_I,KC_D, KC_H, LT(_MD, KC_T), KC_N,KC_S,  KC_CAPSLOCK},
   {SFT_T(KC_DELT), KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, SFT_T(KC_ENT) },
   {GUI_T(KC_ENT),KC_RALT,F(1),CTL_T(KC_TAB),MO(_RS),KC_SPC,KC_SPC,MO(_LW),CTL_T(KC_TAB),F(1),KC_ESC,GUI_T(KC_ENT)}
 },
 
-[_DV] = { /* VOID */
+[_DV_CTRL] = { /* VOID */
   {KC_BSPC,KC_QUOT, KC_COMM, KC_DOT,KC_P, KC_Y, KC_F, KC_G, KC_C,  KC_R,    KC_L,    KC_BSPC},
   {KC_CAPSLOCK, KC_A, KC_O, LT(_MV, KC_E), KC_U, KC_I,KC_D, KC_H, LT(_MD, KC_T), KC_N,KC_S,  KC_CAPSLOCK},
   {SFT_T(KC_DELT), KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, SFT_T(KC_ENT) },
@@ -40,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_LBRC, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_EQL, KC_PLUS, KC_LCBR},
   {KC_RBRC, LSFT(KC_SLSH),KC_TILD, KC_MINS, KC_BSLS, KC_LPRN, KC_RPRN, KC_SLSH, KC_UNDS, KC_PIPE, KC_GRV, KC_RCBR},
   {KC_TRNS, KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS},
-  {KC_TRNS, RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_PGDN, KC_END, KC_PGUP}
+  {KC_TRNS, RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TG(6), KC_TRNS}
 },
 
 [_RS] = { /* RAISE */
@@ -53,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MD] = { /* MEDIA */
   {KC_TRNS, KC_TRNS, KC_BTN3, KC_MS_U, KC_MS_WH_RIGHT, KC_TRNS, KC_TRNS, KC_DOWN, KC_TRNS, KC_UP, KC_TRNS, KC_BSPC},
   {KC_TRNS, KC_MS_WH_LEFT, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS, KC_TRNS, KC_MPLY, KC_TRNS, KC_MPRV, KC_MNXT, KC_MINS},
-  {KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_WH_DOWN, KC_MS_WH_UP, KC_TRNS, KC_TRNS, KC_VOLD, KC_TRNS, KC_VOLU, KC_TRNS, KC_TRNS},
+  {KC_LSFT, KC_TRNS, KC_TRNS, KC_MS_WH_DOWN, KC_MS_WH_UP, KC_TRNS, KC_TRNS, KC_VOLD, KC_TRNS, KC_VOLU, KC_TRNS, KC_TRNS},
   {KC_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_WBAK, KC_BTN1, KC_BTN1, KC_WFWD, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE}
 },
 
@@ -62,6 +65,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_LEFT,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_TRNS,  KC_TRNS},
   {KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_HOME,  KC_TRNS,   KC_END,  KC_TRNS,  KC_TRNS},
   {KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS}
+},
+
+[_GM] = { /* GAMING */
+  {KC_BSPC,KC_QUOT, KC_COMM, KC_DOT,KC_P, KC_Y, KC_F, KC_G, KC_C,  KC_R,    KC_L,    KC_BSPC},
+  {KC_CAPSLOCK, KC_A, KC_O, KC_E, KC_U, KC_I,KC_D, KC_H, KC_T, KC_N,KC_S,  KC_CAPSLOCK},
+  {KC_LSFT, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_RSFT},
+  {KC_ENT,KC_RALT,TG(0),KC_LCTL,MO(_RS),KC_SPC,KC_SPC,MO(_LW),KC_TAB,TG(0),KC_ESC,KC_ENT}
 }
 };
 
