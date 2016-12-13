@@ -2,9 +2,7 @@
 #include "debug.h"
 #include "action_layer.h"
 
-/* #define BASE 0 // default layer */
-/* #define SYMB 1 // symbols */
-/* #define MDIA 2 // media keys */
+/* time of "tapping" is set by "TAPPING_TERM" in config.h */
 
 #define _DV 0
 #define _DV_CTRL 1
@@ -195,10 +193,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  ),
   /* 8: Media and mouse */
   [_MD] = KEYMAP(
-                 KC_TRNS, KC_TRNS,       KC_TRNS, KC_TRNS,       KC_TRNS,         KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS,       KC_TRNS, KC_TRNS,       KC_TRNS,         KC_TRNS, TG(_MD),
                  KC_TRNS, KC_TRNS,       KC_BTN3, KC_MS_U,       KC_MS_WH_RIGHT,  KC_TRNS, KC_TRNS,
                  KC_TRNS, KC_MS_WH_LEFT, KC_MS_L, KC_MS_D,       KC_MS_R,         KC_TRNS,
-                 KC_TRNS, KC_TRNS,       KC_TRNS, KC_MS_WH_DOWN, KC_MS_WH_UP,     KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_TRNS,       KC_BTN2, KC_MS_WH_DOWN, KC_MS_WH_UP,     KC_TRNS, KC_TRNS,
                  KC_TRNS, KC_TRNS,       KC_TRNS, KC_TRNS,       KC_WBAK,
 
                  KC_TRNS, KC_TRNS,
@@ -227,11 +225,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  KC_TRNS,
                  KC_BTN1, GUI_T(KC_BTN2), KC_TRNS,
 
-                 KC_TRNS, KC_TRNS,       KC_TRNS, KC_TRNS,       KC_TRNS,        KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_DOWN,       KC_BTN3, KC_MS_U,       KC_MS_WH_RIGHT, KC_TRNS, KC_TRNS,
-                          KC_MS_WH_LEFT, KC_MS_L, KC_MS_D,       KC_MS_R,        KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS,       KC_TRNS, KC_MS_WH_DOWN, KC_MS_WH_UP,    KC_TRNS, KC_TRNS,
-                 KC_WFWD, KC_TRNS,       KC_TRNS, KC_TRNS,       KC_TRNS,
+                 TG(_MD_R), KC_TRNS,       KC_TRNS,       KC_TRNS,     KC_TRNS,        KC_TRNS, KC_TRNS,
+                 KC_TRNS,   KC_DOWN,       KC_BTN3,       KC_MS_U,     KC_MS_WH_RIGHT, KC_TRNS, KC_TRNS,
+                            KC_MS_WH_LEFT, KC_MS_L,       KC_MS_D,     KC_MS_R,        KC_TRNS, KC_TRNS,
+                 KC_TRNS,   KC_TRNS,       KC_MS_WH_DOWN, KC_MS_WH_UP, KC_BTN2,        KC_TRNS, KC_TRNS,
+                 KC_WFWD,   KC_TRNS,       KC_TRNS,       KC_TRNS,     KC_TRNS,
 
                  KC_TRNS, KC_TRNS,
                  KC_TRNS,
@@ -424,26 +422,20 @@ void matrix_scan_user(void) {
         case 1:
             ergodox_right_led_1_on();
             break;
-        case 2:
-            ergodox_right_led_2_on();
-            break;
-        case 3:
-            ergodox_right_led_3_on();
-            break;
         case 4:
-            ergodox_right_led_1_on();
             ergodox_right_led_3_on();
-            ergodox_board_led_on();
             break;
         case 5:
+            ergodox_right_led_2_on();
+            break;
+        case 8:
             ergodox_right_led_1_on();
             ergodox_right_led_2_on();
             ergodox_board_led_on();
             break;
-        case 6:
+        case 9:
             ergodox_right_led_2_on();
             ergodox_right_led_3_on();
-            ergodox_board_led_on();
             break;
         default:
             // none
