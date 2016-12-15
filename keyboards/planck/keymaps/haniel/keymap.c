@@ -88,6 +88,14 @@ const uint16_t PROGMEM fn_actions[] = {
   [1] = ACTION_SWAP_HANDS_TAP_TOGGLE()
 };
 
+qk_tap_dance_action_t tap_dance_actions[] = {
+  //Tap once for equal, twice for hyper + X (alfred lock)
+  /* [TD_EQ_LOCK] = ACTION_TAP_DANCE_DOUBLE(KC_EQL,  HYPR(KC_X)), */
+  //Tap once for minus, twice for time.heals.nothing
+  /* [TD_MIN_ULOCK] = ACTION_TAP_DANCE_DOUBLE(KC_MINS, M(_ULCK)) */
+};
+
+
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
   // MACRODOWN only works in this function
@@ -95,7 +103,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case 0:
           if (record->event.pressed) {
             register_code(KC_RSFT);
-            backlight_step();
           } else {
             unregister_code(KC_RSFT);
           }
