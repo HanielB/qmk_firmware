@@ -4,25 +4,37 @@
 
 /* time of "tapping" is set by "TAPPING_TERM" in config.h */
 
+extern keymap_config_t keymap_config;
+
+// Custom Keycodes
+enum planck_keycodes {
+  DVORAK = SAFE_RANGE,
+  LOWER,
+  RAISE,
+};
+
+// Fillers to make layering more clear
+#define _______       KC_TRNS
+#define XXXXXXX       KC_NO
+
 #define _DV 0
 #define _DV_CTRL 1
 #define _LW 2
 #define _RS 3
 #define _MV 4
-#define _MV_L 5
 #define _LW_CTRL 6
 #define _RS_CTRL 7
-#define _MD 8
-#define _MD_R 9
+#define _MS 8
+#define _MS_R 9
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* 0: Dvorak */
   [_DV] = KEYMAP(
-                 KC_GRV,      KC_1,    KC_2,    KC_3,          KC_4,    KC_5, TG(_MV_L),
+                 KC_GRV,      KC_1,    KC_2,    KC_3,          KC_4,    KC_5, TG(_MV),
                  KC_BSPC,     KC_QUOT, KC_COMM, KC_DOT,        KC_P,    KC_Y, TG(_DV_CTRL),
-                 KC_CAPSLOCK, KC_A,    KC_O,    LT(_MV, KC_E), KC_U,    KC_I,
+                 KC_CAPSLOCK, KC_A,    KC_O,    LT(_MS_R, KC_E), KC_U,    KC_I,
                  KC_LSFT,     KC_SCLN, KC_Q,    KC_J,          KC_K,    KC_X, KC_ENTER,
-                 MO(_RS),     KC_RALT, KC_LALT, F(1),          MO(_RS),
+                 MO(_MV),     KC_RALT, KC_LALT, F(1),          LOWER ,
 
                  KC_DELT, ALT_T(KC_APP),
                  KC_HOME,
@@ -30,9 +42,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                  TG(_MV),    KC_6, KC_7, KC_8,          KC_9,  KC_0,  KC_BSLS,
                  TG(_DV_CTRL),    KC_F, KC_G, KC_C,          KC_R,  KC_L,  KC_BSPC,
-                 KC_D, KC_H, LT(_MD, KC_T), KC_N,  KC_S,  KC_CAPSLOCK,
+                 KC_D, KC_H, LT(_MS, KC_T), KC_N,  KC_S,  KC_CAPSLOCK,
                  KC_ENTER, KC_B, KC_M, KC_W,          KC_V,  KC_Z,  KC_RSFT,
-                 MO(_LW), F(1),          KC_NO, KC_NO, MO(_LW),
+                 RAISE, F(1),          KC_NO, KC_NO, MO(_MV),
 
                  KC_RALT, KC_ESC,
                  KC_PGUP,
@@ -40,200 +52,180 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  ),
   /* 1: Dvorak with "control" */
   [_DV_CTRL] = KEYMAP(
-                 KC_TRNS, F(64), F(65), F(66), F(67), F(68), KC_TRNS,
-                 KC_TRNS, F(69), F(70), F(71), F(72), F(73), KC_TRNS,
-                 KC_TRNS, F(74), F(75), F(76), F(77), F(78),
-                 KC_TRNS, F(79), F(80), F(81), F(82), F(83), KC_TRNS,
-                 KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, MO(_RS_CTRL),
+                 _______, F(64), F(65), F(66), F(67), F(68), _______,
+                 _______, F(69), F(70), F(71), F(72), F(73), _______,
+                 _______, F(74), F(75), F(76), F(77), F(78),
+                 _______, F(79), F(80), F(81), F(82), F(83), _______,
+                 _______, _______,  _______,  _______, MO(_RS_CTRL),
 
-                          KC_TRNS, KC_TRNS,
-                                   KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
+                          _______, _______,
+                                   _______,
+                 _______, _______, _______,
 
-                 KC_TRNS, F(84), F(85),  F(86),  F(87),  F(88),  KC_TRNS,
-                 KC_TRNS, F(89), F(90),  F(91),  F(92),  F(93),  KC_TRNS,
-                          F(94), F(95),  F(96),  F(97),  F(98),  KC_TRNS,
-                 KC_TRNS, F(99), F(100), F(101), F(102), F(103), KC_TRNS,
-                 MO(_LW_CTRL), KC_TRNS,KC_TRNS,KC_TRNS, KC_TRNS,
+                 _______, F(84), F(85),  F(86),  F(87),  F(88),  _______,
+                 _______, F(89), F(90),  F(91),  F(92),  F(93),  _______,
+                          F(94), F(95),  F(96),  F(97),  F(98),  _______,
+                 _______, F(99), F(100), F(101), F(102), F(103), _______,
+                 MO(_LW_CTRL), _______,_______,_______, _______,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
+                 _______, _______,
+                 _______,
+                 _______, _______, _______
                  ),
   /* 2: Lower */
   [_LW] = KEYMAP(
-                 KC_F11,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,              KC_TRNS,
-                 KC_LBRC,KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,       KC_TRNS,
-                 KC_RBRC,LSFT(KC_SLSH),KC_TILD, KC_MINS, KC_BSLS, KC_LPRN,
-                 KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,           KC_TRNS,
-                 KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+                 KC_F11,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,              _______,
+                 _______, KC_6  , KC_7   , KC_8   , KC_9   , KC_0,       _______,
+                 _______, KC_1  , KC_2   , KC_3   , KC_4   , KC_5,
+                 _______,_______,_______,  _______, _______, _______,           _______,
+                 _______,_______,_______,_______,_______,
 
-                 KC_TRNS,KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS,KC_TRNS,KC_TRNS,
+                 _______,_______,
+                 _______,
+                 _______,_______,_______,
 
-                 KC_TRNS, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F12,
-                 KC_TRNS, KC_CIRC, KC_AMPR, KC_ASTR, KC_EQL, KC_PLUS, KC_LCBR,
-                          KC_RPRN, KC_SLSH, KC_UNDS, KC_PIPE, KC_GRV, KC_RCBR,
-                 KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,
-                 KC_TRNS,KC_TRNS,  KC_TRNS,    KC_TRNS,  KC_TRNS,
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
+                 _______, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F12,
+                 _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_EQL, KC_PLUS, _______,
+                          KC_RPRN, KC_SLSH, KC_UNDS, KC_PIPE, KC_GRV, _______,
+                 _______, _______, _______,   _______,    _______,    _______, _______,
+                 RAISE  , _______, _______,    _______,  _______,
+
+                 _______, _______,
+                 _______,
+                 _______, _______, _______
                  ),
   /* 3: Raise */
   [_RS] = KEYMAP(
-                 KC_F11,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_TRNS,
-                 KC_TRNS,KC_1,  KC_2,  KC_3,  KC_4,  KC_5,  KC_TRNS,
-                 KC_TRNS,KC_1,  KC_2,  KC_3,  KC_4,  KC_5,
-                 KC_TRNS,KC_PERC,KC_CIRC,KC_LBRC,KC_RBRC,KC_TILD,KC_TRNS,
-                 KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+                 KC_F11,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  _______,
+                 _______,KC_EXLM, KC_AT  , KC_HASH, KC_DLR , KC_PERC,  _______,
+                 _______,KC_QUES, KC_TILD, KC_MINS, KC_BSLS, KC_LPRN,
+                 _______,_______,_______,KC_LBRC, KC_RBRC,_______,_______,
+                 _______,_______,_______,_______,LOWER,
 
-                 KC_TRNS,KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS,KC_TRNS,KC_TRNS,
+                 _______,_______,
+                 _______,
+                 _______,_______,_______,
 
-                 KC_TRNS, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F12,
-                 KC_TRNS, KC_6,   KC_7,  KC_8,   KC_9,   KC_0,  KC_TRNS,
+                 _______, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F12,
+                 _______, KC_1   , KC_2   , KC_3   , KC_4   , KC_5,  _______,
                           KC_6,   KC_7,  KC_8,   KC_9,   KC_0,  KC_MINS,
-                 KC_TRNS, KC_AMPR, KC_1,   KC_2,    KC_3,    KC_BSLS, KC_TRNS,
-                 KC_TRNS,KC_DOT,  KC_0,    KC_EQL,  KC_TRNS,
+                 _______, _______, KC_LCBR, KC_RCBR,_______,_______, _______,
+                 _______,_______,  _______, _______,  _______,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
+                 _______, _______,
+                 _______,
+                 _______, _______, _______
                  ),
   /* 4: Moving */
   [_MV] = KEYMAP(
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_SPC,  KC_TRNS, KC_DELT, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TAB, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 _______, _______, _______, _______, _______, _______, _______,
+                 _______, KC_BSPC, KC_HOME, KC_UP  , KC_END , KC_PGUP, TG(_MS),
+                 _______, KC_SPC , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,
+                 _______, KC_MPLY, KC_VOLD, KC_MPRV, KC_DEL , XXXXXXX, _______,
+                 _______, _______, _______, _______, _______,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
+                 _______, _______,
+                 _______,
+                 _______, _______, _______,
                  // right hand
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 TG(_MD_R), KC_TRNS, KC_PGDN, KC_UP,   KC_PGUP, KC_TRNS, KC_TRNS,
-                          KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_HOME, KC_TRNS, KC_END,  KC_TRNS, KC_TRNS,
-                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 _______, _______, _______, _______, _______, _______, _______,
+                 TG(_MS_R), KC_PGUP, KC_HOME, KC_UP  , KC_END , KC_BSPC, _______,
+                          KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_SPC , _______,
+                 _______, XXXXXXX, KC_DEL , KC_MNXT, KC_VOLU, KC_MUTE, _______,
+                          _______, _______, _______, _______, _______,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
+                 _______, _______,
+                 _______,
+                 _______, _______, _______
          ),
-  /* 5: Moving with left */
-  [_MV_L] = KEYMAP(
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_PGDN, KC_UP,   KC_PGUP, KC_TRNS, TG(_MD),
-                 KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_HOME, KC_TRNS, KC_END,  KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
-                 // right hand
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
-         ),
   /* 6: Lower with "control" */
   [_LW_CTRL] = KEYMAP(
-                 KC_TRNS, F(144), F(145), F(146), F(147), F(148), KC_TRNS,
-                 KC_TRNS, F(149), F(150), F(151), F(152), F(153), KC_TRNS,
-                 KC_TRNS, F(154), F(155), F(156), F(157), F(158),
-                 KC_TRNS, F(159), F(160), F(161), F(162), F(163), KC_TRNS,
-                 KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,
+                 _______, F(144), F(145), F(146), F(147), F(148), _______,
+                 _______, F(149), F(150), F(151), F(152), F(153), _______,
+                 _______, F(154), F(155), F(156), F(157), F(158),
+                 _______, F(159), F(160), F(161), F(162), F(163), _______,
+                 _______, _______,  _______,  _______, _______,
 
-                          KC_TRNS, KC_TRNS,
-                                   KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
+                          _______, _______,
+                                   _______,
+                 _______, _______, _______,
 
-                 KC_TRNS, F(164), F(165), F(166), F(167), F(168),  KC_TRNS,
-                 KC_TRNS, F(169), F(170), F(171), F(172), F(173),  KC_TRNS,
-                          F(174), F(175), F(176), F(177), F(178),  KC_TRNS,
-                 KC_TRNS, F(179), F(180), F(181), F(182), F(183), KC_TRNS,
-                 KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS, KC_TRNS,
+                 _______, F(164), F(165), F(166), F(167), F(168),  _______,
+                 _______, F(169), F(170), F(171), F(172), F(173),  _______,
+                          F(174), F(175), F(176), F(177), F(178),  _______,
+                 _______, F(179), F(180), F(181), F(182), F(183), _______,
+                 _______, _______,_______,_______, _______,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
+                 _______, _______,
+                 _______,
+                 _______, _______, _______
                  ),
   /* 7: Raise with "control" */
   [_RS_CTRL] = KEYMAP(
-                 KC_TRNS, F(104), F(105), F(106), F(107), F(108), KC_TRNS,
-                 KC_TRNS, F(109), F(110), F(111), F(112), F(113), KC_TRNS,
-                 KC_TRNS, F(114), F(115), F(116), F(117), F(118),
-                 KC_TRNS, F(119), F(120), F(121), F(122), F(123), KC_TRNS,
-                 KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,
+                 _______, F(104), F(105), F(106), F(107), F(108), _______,
+                 _______, F(109), F(110), F(111), F(112), F(113), _______,
+                 _______, F(114), F(115), F(116), F(117), F(118),
+                 _______, F(119), F(120), F(121), F(122), F(123), _______,
+                 _______, _______,  _______,  _______, _______,
 
-                          KC_TRNS, KC_TRNS,
-                                   KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS,
+                          _______, _______,
+                                   _______,
+                 _______, _______, _______,
 
-                 KC_TRNS, F(124), F(125), F(126), F(127), F(128),  KC_TRNS,
-                 KC_TRNS, F(129), F(130), F(131), F(132), F(133),  KC_TRNS,
-                          F(134), F(135), F(136), F(137), F(138),  KC_TRNS,
-                 KC_TRNS, F(139), F(140), F(141), F(142), F(143), KC_TRNS,
-                 KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS, KC_TRNS,
+                 _______, F(124), F(125), F(126), F(127), F(128),  _______,
+                 _______, F(129), F(130), F(131), F(132), F(133),  _______,
+                          F(134), F(135), F(136), F(137), F(138),  _______,
+                 _______, F(139), F(140), F(141), F(142), F(143), _______,
+                 _______, _______,_______,_______, _______,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS
+                 _______, _______,
+                 _______,
+                 _______, _______, _______
                  ),
   /* 8: Media and mouse */
-  [_MD] = KEYMAP(
-                 KC_TRNS, KC_TRNS,       KC_TRNS, KC_TRNS,       KC_TRNS,         KC_TRNS, TG(_MD),
-                 KC_TRNS, KC_TRNS,       KC_BTN3, KC_MS_U,       KC_MS_WH_RIGHT,  KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_MS_WH_LEFT, KC_MS_L, KC_MS_D,       KC_MS_R,         KC_TRNS,
-                 KC_TRNS, KC_TRNS,       KC_BTN2, KC_MS_WH_DOWN, KC_MS_WH_UP,     KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS,       KC_TRNS, KC_TRNS,       KC_WBAK,
+  [_MS] = KEYMAP(
+                 _______, _______,       _______, _______,       _______,         _______, TG(_MS),
+                 _______, _______, KC_BTN2, KC_MS_U, KC_BTN1, KC_BTN3, _______,
+                 _______, KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R,
+                 _______, _______, _______, KC_WH_D, KC_WH_U, _______, _______,
+                 _______, _______,       _______, _______,       KC_WBAK,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_BTN1, GUI_T(KC_BTN2), KC_TRNS,
+                 _______, _______,
+                 _______,
+                 KC_BTN1, GUI_T(KC_BTN2), _______,
 
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_DOWN, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                          KC_TRNS, KC_MPLY, KC_TRNS, KC_MPRV, KC_MNXT, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_VOLD, KC_TRNS, KC_VOLU, KC_MUTE, KC_TRNS,
-                 KC_WFWD, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                 _______, _______, _______, _______, _______, _______, _______,
+                 _______, _______, _______, _______, _______, _______, _______,
+                          _______, KC_ACL2, _______, KC_ACL1, KC_ACL0, _______,
+                 _______, _______, _______, _______, _______, _______, _______,
+                 KC_WFWD, _______, _______, _______, _______,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, GUI_T(KC_BTN2), KC_BTN1
+                 _______, _______,
+                 _______,
+                 _______, GUI_T(KC_BTN2), KC_BTN1
          ),
   /* 9: Media and mouse with right */
-  [_MD_R] = KEYMAP(
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_WBAK,
+  [_MS_R] = KEYMAP(
+                 _______, _______, _______, _______, _______, _______, _______,
+                 _______, _______, _______, _______, _______, _______, _______,
+                 _______, KC_ACL0, KC_ACL1, _______, KC_ACL2, _______,
+                 _______, _______, _______, _______, _______, _______, _______,
+                 _______, _______, _______, _______, KC_WBAK,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_BTN1, GUI_T(KC_BTN2), KC_TRNS,
+                 _______, _______,
+                 _______,
+                 KC_BTN1, GUI_T(KC_BTN2), _______,
 
-                 TG(_MD_R), KC_TRNS,       KC_TRNS,       KC_TRNS,     KC_TRNS,        KC_TRNS, KC_TRNS,
-                 KC_TRNS,   KC_DOWN,       KC_BTN3,       KC_MS_U,     KC_MS_WH_RIGHT, KC_TRNS, KC_TRNS,
-                            KC_MS_WH_LEFT, KC_MS_L,       KC_MS_D,     KC_MS_R,        KC_TRNS, KC_TRNS,
-                 KC_TRNS,   KC_TRNS,       KC_MS_WH_DOWN, KC_MS_WH_UP, KC_BTN2,        KC_TRNS, KC_TRNS,
-                 KC_WFWD,   KC_TRNS,       KC_TRNS,       KC_TRNS,     KC_TRNS,
+                 TG(_MS_R), _______,       _______,       _______,     _______,        _______, _______,
+                 _______,   KC_BTN3, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
+                            KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R, KC_BTN5,
+                 _______,   _______,       KC_MS_WH_DOWN, KC_MS_WH_UP, _______,        _______, _______,
+                 KC_WFWD,   _______,       _______,       _______,     _______,
 
-                 KC_TRNS, KC_TRNS,
-                 KC_TRNS,
-                 KC_TRNS, GUI_T(KC_BTN2), KC_BTN1
+                 _______, _______,
+                 _______,
+                 _______, GUI_T(KC_BTN2), KC_BTN1
          ),
 };
 
@@ -358,11 +350,11 @@ const uint16_t PROGMEM fn_actions[] = {
   [157] = ACTION_MODS_KEY(MOD_LGUI, KC_BSLS),
   [158] = ACTION_MODS_KEY(MOD_LGUI, KC_LPRN),
 
-  [159] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
-  [160] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
-  [161] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
-  [162] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
-  [163] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
+  [159] = ACTION_MODS_KEY(MOD_LGUI, _______),
+  [160] = ACTION_MODS_KEY(MOD_LGUI, _______),
+  [161] = ACTION_MODS_KEY(MOD_LGUI, _______),
+  [162] = ACTION_MODS_KEY(MOD_LGUI, _______),
+  [163] = ACTION_MODS_KEY(MOD_LGUI, _______),
 
   [164] = ACTION_MODS_KEY(MOD_LGUI, KC_F6),
   [165] = ACTION_MODS_KEY(MOD_LGUI, KC_F7),
@@ -382,27 +374,91 @@ const uint16_t PROGMEM fn_actions[] = {
   [177] = ACTION_MODS_KEY(MOD_LGUI, KC_PIPE),
   [178] = ACTION_MODS_KEY(MOD_LGUI, KC_GRV),
 
-  [179] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
-  [180] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
-  [181] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
-  [182] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS),
-  [183] = ACTION_MODS_KEY(MOD_LGUI, KC_TRNS)
+  [179] = ACTION_MODS_KEY(MOD_LGUI, _______),
+  [180] = ACTION_MODS_KEY(MOD_LGUI, _______),
+  [181] = ACTION_MODS_KEY(MOD_LGUI, _______),
+  [182] = ACTION_MODS_KEY(MOD_LGUI, _______),
+  [183] = ACTION_MODS_KEY(MOD_LGUI, _______)
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
   // MACRODOWN only works in this function
-      switch(id) {
-        case 0:
-        if (record->event.pressed) {
-          register_code(KC_RSFT);
-        } else {
-          unregister_code(KC_RSFT);
-        }
-        break;
-      }
-    return MACRO_NONE;
+  switch(id) {
+  case 0:
+    if (record->event.pressed) {
+      register_code(KC_RSFT);
+      /* backlight_step(); */
+    } else {
+      unregister_code(KC_RSFT);
+    }
+    break;
+  }
+  return MACRO_NONE;
 };
+
+void persistant_default_layer_set(uint16_t default_layer) {
+  eeconfig_update_default_layer(default_layer);
+  default_layer_set(default_layer);
+}
+
+static bool inverted_l = false;
+static bool inverted_r = false;
+
+// Process KeyPress
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+  case LOWER:
+    if (record->event.pressed)
+      {
+        layer_on(_LW);
+        if (IS_LAYER_ON(_RS))
+          {
+            layer_off(_RS);
+            inverted_r = true;
+          }
+        /* update_tri_layer(_LW, _RS, _NEXUS); */
+      }
+    else
+      {
+        layer_off(_LW);
+        inverted_l = false;
+        if (inverted_r)
+          {
+            layer_on(_RS);
+            inverted_r = false;
+          }
+        /* update_tri_layer(_LW, _RS, _NEXUS); */
+      }
+    return false;
+    break;
+  case RAISE:
+    if (record->event.pressed)
+      {
+        layer_on(_RS);
+        if (IS_LAYER_ON(_LW))
+          {
+            layer_off(_LW);
+            inverted_l = true;
+          }
+        /* update_tri_layer(_LW, _RS, _NEXUS); */
+      }
+    else
+      {
+        layer_off(_RS);
+        inverted_r = false;
+        if (inverted_l)
+          {
+            layer_on(_LW);
+            inverted_l = false;
+          }
+        /* update_tri_layer(_LW, _RS, _NEXUS); */
+      }
+    return false;
+    break;
+  }
+  return true;
+}
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
