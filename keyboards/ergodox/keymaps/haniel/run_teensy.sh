@@ -1,3 +1,3 @@
 #!bin/bash
 
-setsid ~/keyboards/teensy.64bit
+setsid ../../teensy.64bit
