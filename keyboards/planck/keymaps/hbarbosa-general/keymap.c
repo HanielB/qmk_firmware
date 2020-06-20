@@ -25,16 +25,15 @@ enum funcs_keycodes {
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
-#define _DV       0
-/* #define _DVORAK_CTRL  1 */
+#define _DV           0
+#define _GAME         1
 #define _ONEHAND      3
 #define _LOWER        4
 #define _RAISE        5
 #define _MOUSE        6
 #define _LFTMOUSE     8
-#define _BOTHMOUSE     9
+#define _BOTHMOUSE    9
 #define _MOVE         10
-#define _GAME         11
 #define _UTIL         12
 #define _NEXUS        16
 
@@ -99,6 +98,13 @@ enum funcs_keycodes {
       { KC_CAPS, KC_A   , KC_O   , LT(_MOUSE, KC_E)   , KC_U   , KC_I   , KC_D   , KC_H   , LT(_LFTMOUSE, KC_T), KC_N   , KC_S   , KC_LGUI},
       { KC_LSFT, KC_SCLN, KC_Q   , KC_J   , KC_K   , KC_X   , KC_B   , KC_M   , KC_W   , KC_V   , KC_Z   , SFT_ENT},
       { CTL_ENT , KC_RALT, TG_MOVE, ALT_TAB, LOWER  , MV_SPC , MV_SPC , RAISE, ALT_TAB, TG_MOVE, KC_ESC, CTL_ENT}
+    },
+
+    [_GAME] = { /* GAMING */
+      { KC_BSPC, KC_Q, KC_W, KC_E , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_QUOT},
+      { KC_CAPS, KC_A, KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN   , KC_LGUI},
+      { KC_LSFT, KC_Z, KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM   , KC_DOT   , KC_SLSH, KC_RSFT},
+      { KC_LCTL , KC_RALT, TO(_DV)  , ALT_TAB, LOWER  , MV_SPC , MV_SPC , RAISE  , ALT_TAB , TO(_DV)  , KC_ESC , KC_ENT }
     },
 
     /* One Hand Layer - Dvorak
@@ -243,7 +249,7 @@ enum funcs_keycodes {
       { KC_BTN1, _______, _______, _______, _______, TO(_DV), TO(_DV), _______, _______, _______, _______, KC_BTN1}
     },
 
-    /* Util layer
+      /* Util layer
        +========+========+========+========+========+========+========+========+========+========+========+========+
        | __01__ | __02__ | __03__ | __04__ | __05__ | __06__ | __07__ | __08__ | __09__ | __10__ | __11__ | __12__ |
        +========+========+========+========+========+========+========+========+========+========+========+========+
@@ -261,13 +267,6 @@ enum funcs_keycodes {
       { XXXXXXX, KC_WBAK, KC_WHOM, KC_CUT , KC_COPY, KC_PAST, KC_UNDO, KC_FIND, KC_MAIL, KC_WSTP, KC_WFWD, XXXXXXX},
       { XXXXXXX, KC_PWR , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
       { XXXXXXX, KC_SLEP, KC_WAKE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX}
-    },
-
-    [_GAME] = { /* GAMING */
-      { KC_BSPC, KC_Q, KC_W, KC_E , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_QUOT},
-      { KC_CAPS, KC_A, KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN   , KC_LGUI},
-      { KC_LSFT, KC_Z, KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM   , KC_DOT   , KC_SLSH, KC_RSFT},
-      { KC_LCTL , KC_RALT, TG(0)  , ALT_TAB, LOWER  , KC_SPC , KC_SPC , RAISE  , ALT_TAB , TG(0)  , KC_ESC , KC_ENT }
     },
 
     /* Nexus (Lower + Raise)
