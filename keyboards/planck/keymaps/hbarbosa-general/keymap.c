@@ -104,7 +104,7 @@ enum funcs_keycodes {
       { KC_BSPC, KC_Q, KC_W, KC_E , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_QUOT},
       { KC_CAPS, KC_A, KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN   , KC_LGUI},
       { KC_LSFT, KC_Z, KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM   , KC_DOT   , KC_SLSH, KC_RSFT},
-      { KC_LCTL , KC_RALT, TO(_DV)  , ALT_TAB, LOWER  , MV_SPC , MV_SPC , RAISE  , ALT_TAB , TO(_DV)  , KC_ESC , KC_ENT }
+      { KC_LCTL , KC_RALT, TO(_DV)  , ALT_TAB, LOWER  , KC_SPC , KC_SPC , RAISE  , ALT_TAB , TO(_DV)  , KC_ESC , KC_ENT }
     },
 
     /* One Hand Layer - Dvorak
